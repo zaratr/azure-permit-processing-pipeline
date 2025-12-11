@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("azure-permit-processing-pipeline")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ae7f8296e95090bcb1885bb6e7daac109e01e282")]
 [assembly: System.Reflection.AssemblyProductAttribute("azure-permit-processing-pipeline")]
 [assembly: System.Reflection.AssemblyTitleAttribute("azure-permit-processing-pipeline")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

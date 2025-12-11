@@ -1,0 +1,19 @@
+<section class="panel">
+  <h2>Permit Requests</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Application ID</th>
+        <th>Applicant Email</th>
+        <th>License Type</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let permit of permits">
+        <td>{{ permit.applicationId }}</td>
+        <td>{{ permit.applicantEmail }}</td>
+        <td>{{ permit.licenseType }}</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
