@@ -1,0 +1,60 @@
+{
+  "title": "Permit Pipeline — eBPF Observability",
+  "description": "Zero-instrumentation kernel-level metrics for the Azure permit processing pipeline. All data captured via eBPF probes — no SDK changes required.",
+  "schemaVersion": 38,
+  "tags": ["ebpf", "permit", "zero-instrumentation"],
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "TCP Socket Latency p50 / p95 / p99 (ms)",
+      "description": "Kernel-level round-trip time for all TCP connections made by the permit API and function. Segmented by destination: Azure Storage (queue), PostgreSQL, HTTP.",
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.50, rate(permit_socket_latency_ms_bucket[1m]))",
+          "legendFormat": "p50"
+        },
+        {
+          "expr": "histogram_quantile(0.95, rate(permit_socket_latency_ms_bucket[1m]))",
+          "legendFormat": "p95"
+        },
+        {
+          "expr": "histogram_quantile(0.99, rate(permit_socket_latency_ms_bucket[1m]))",
+          "legendFormat": "p99"
+        }
+      ]
+    },
+    {
+      "type": "timeseries",
+      "title": "eBPF Events / sec by Destination Port",
+      "description": "Rate of captured TCP events per destination. Spikes indicate bursts of queue polling or database activity.",
+      "targets": [
+        {
+          "expr": "rate(permit_ebpf_events_total[1m])",
+          "legendFormat": "{{dest_port}}"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Azure Storage Queue Latency p99 (ms)",
+      "description": "p99 socket RTT to port 443 (Azure Storage HTTPS). Elevated values indicate queue saturation or network congestion.",
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.99, rate(permit_socket_latency_ms_bucket{dest_port='azure-storage-https'}[5m]))"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Total Events Captured",
+      "targets": [
+        {
+          "expr": "sum(permit_ebpf_events_total)"
+        }
+      ]
+    }
+  ],
+  "datasource": "Prometheus",
+  "refresh": "10s",
+  "time": { "from": "now-15m", "to": "now" }
+}
