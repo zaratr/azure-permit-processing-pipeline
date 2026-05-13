@@ -1,6 +1,8 @@
 # Azure Permit Processing Pipeline
 
-Event-driven permit processing workflow: .NET Web API → Azure Storage Queues → Azure Functions → SQL. Upgraded in 2026 with an **eBPF observability layer** — kernel-level network and latency tracing with zero code changes to the application.
+Event-driven permit processing on Azure — Web API → Storage Queues → Functions — upgraded in 2026 with an **eBPF zero-instrumentation observability layer** that traces network latency and cold starts at the Linux kernel level with zero code changes to the application.
+
+**Skills demonstrated:** Azure Functions · Azure Storage Queues · .NET · Angular · event-driven architecture · eBPF kernel observability · Prometheus · Grafana
 
 ## 2026 Update: eBPF Zero-Instrumentation Observability
 
