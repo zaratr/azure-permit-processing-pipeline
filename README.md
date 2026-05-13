@@ -1,6 +1,26 @@
 # Azure Permit Processing Pipeline
 
-This repository demonstrates an event-driven permit processing workflow built with a .NET Web API, Azure Storage Queues, an Azure Functions processor, SQL Server (conceptual), and an Angular dashboard.
+Event-driven permit processing workflow: .NET Web API → Azure Storage Queues → Azure Functions → SQL. Upgraded in 2026 with an **eBPF observability layer** — kernel-level network and latency tracing with zero code changes to the application.
+
+## 2026 Update: eBPF Zero-Instrumentation Observability
+
+See [`observability/README.md`](observability/README.md) for full details.
+
+Instead of adding OpenTelemetry SDK calls to the .NET API or Function host, eBPF probes hook directly into the Linux kernel to capture:
+- TCP socket RTT for every call from the API to Azure Storage queues
+- Function cold-start detection via process exec events
+- Network retransmit detection — no application-side instrumentation required
+
+```
+Permit API ──▶ Linux kernel eBPF probes ──▶ BPF ring buffer
+Azure Function ──────────────────────────────────┘
+                                                 │
+                                          user-space reader
+                                                 │
+                                      Prometheus :8000 ──▶ Grafana
+```
+
+A pre-built Grafana dashboard (`observability/ebpf-grafana-dashboard.json`) provides p50/p95/p99 latency panels for the queue-to-function processing path.
 
 ## Architecture
 
