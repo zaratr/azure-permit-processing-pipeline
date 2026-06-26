@@ -4,3 +4,14 @@ obj/
 node_modules/
 .env
 azurite/
+
+# .NET build output
+[Bb]in/
+[Oo]bj/
+*.user
+*.suo
+.vs/
+
+# Azure Functions local settings (local-only by convention; may hold secrets)
+local.settings.json
+appsettings.Development.json
